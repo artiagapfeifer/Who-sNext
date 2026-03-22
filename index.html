@@ -3,21 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roger Scream</title>
+  <title>Roger Scream Button</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <main class="hero">
+    <section class="card">
+      <span class="badge">Mini projeto web</span>
 
-  <div class="stage">
-    <h1 class="title">🎤 WON'T GET FOOLED AGAIN</h1>
-    <p class="subtitle">Clique e sinta o poder do rock</p>
+      <h1>Roger Scream Button</h1>
 
-    <button id="playBtn">⚡ SCREAM ⚡</button>
+      <p class="description">Clique e sinta o poder do rock</p>
 
-    <!-- vídeo escondido só para tocar o áudio -->
-    <video id="screamVideo" src="roger-scream.mp4" preload="auto" style="display:none"></video>
-  </div>
+      <button id="playBtn" class="play-btn">⚡ Tocar grito</button>
+
+      <p id="status" class="status">Pronto para tocar.</p>
+
+      <video
+        id="screamVideo"
+        preload="auto"
+        playsinline
+        style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;"
+      >
+        <source src="./roger-scream.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo.
+      </video>
+    </section>
+  </main>
 
   <div id="flash"></div>
 
@@ -25,24 +37,45 @@
     const button = document.getElementById("playBtn");
     const video = document.getElementById("screamVideo");
     const flash = document.getElementById("flash");
+    const statusText = document.getElementById("status");
 
-    button.addEventListener("click", () => {
-      video.currentTime = 0;
+    video.volume = 1.0;
 
-      video.play().catch(err => {
-        console.log("Erro ao tocar:", err);
-      });
+    video.addEventListener("loadeddata", () => {
+      statusText.textContent = "Arquivo carregado. Pronto para tocar.";
+    });
 
-      // efeitos visuais
-      flash.classList.add("active");
-      button.classList.add("shake");
+    video.addEventListener("error", () => {
+      statusText.textContent = "Erro ao carregar o MP4.";
+      console.error("Erro no vídeo:", video.error);
+    });
 
-      setTimeout(() => {
-        flash.classList.remove("active");
-        button.classList.remove("shake");
-      }, 400);
+    button.addEventListener("click", async () => {
+      try {
+        video.pause();
+        video.currentTime = 0;
+        video.muted = false;
+        video.volume = 1.0;
+
+        await video.play();
+
+        statusText.textContent = "Tocando...";
+        flash.classList.add("active");
+        button.classList.add("shake");
+
+        setTimeout(() => {
+          flash.classList.remove("active");
+          button.classList.remove("shake");
+        }, 450);
+      } catch (error) {
+        statusText.textContent = "Não foi possível reproduzir o arquivo.";
+        console.error("Erro ao tocar:", error);
+      }
+    });
+
+    video.addEventListener("ended", () => {
+      statusText.textContent = "Pronto para tocar novamente.";
     });
   </script>
-
 </body>
 </html>
