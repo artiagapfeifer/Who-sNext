@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roger Scream</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="stage">
+    <h1 class="title">🎤 WON'T GET FOOLED AGAIN</h1>
+    <p class="subtitle">Clique e sinta o poder do rock</p>
+
+    <button id="playBtn">⚡ SCREAM ⚡</button>
+
+    <!-- vídeo escondido só para tocar o áudio -->
+    <video id="screamVideo" src="roger-scream.mp4" preload="auto" style="display:none"></video>
+  </div>
+
+  <div id="flash"></div>
+
+  <script>
+    const button = document.getElementById("playBtn");
+    const video = document.getElementById("screamVideo");
+    const flash = document.getElementById("flash");
+
+    button.addEventListener("click", () => {
+      video.currentTime = 0;
+
+      video.play().catch(err => {
+        console.log("Erro ao tocar:", err);
+      });
+
+      // efeitos visuais
+      flash.classList.add("active");
+      button.classList.add("shake");
+
+      setTimeout(() => {
+        flash.classList.remove("active");
+        button.classList.remove("shake");
+      }, 400);
+    });
+  </script>
+
+</body>
+</html>

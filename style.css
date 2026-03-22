@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial Black", sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #111 0%, #000 100%);
+  color: white;
+  overflow: hidden;
+}
+
+/* palco */
+.stage {
+  text-align: center;
+  z-index: 2;
+}
+
+/* título com glow */
+.title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #ff004c, 0 0 20px #ff004c;
+}
+
+/* subtítulo */
+.subtitle {
+  margin-bottom: 30px;
+  color: #ccc;
+}
+
+/* botão estilo neon */
+button {
+  background: transparent;
+  border: 2px solid #ff004c;
+  color: #ff004c;
+  padding: 15px 40px;
+  font-size: 1.3rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 0 10px #ff004c, inset 0 0 10px #ff004c;
+}
+
+/* hover neon forte */
+button:hover {
+  background: #ff004c;
+  color: white;
+  box-shadow: 0 0 20px #ff004c, 0 0 40px #ff004c;
+}
+
+/* clique */
+button:active {
+  transform: scale(0.95);
+}
+
+/* efeito de flash */
+#flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#flash.active {
+  animation: flash 0.4s ease;
+}
+
+@keyframes flash {
+  0% { opacity: 0; }
+  30% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+/* tremor do botão */
+.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translate(0); }
+  25% { transform: translate(-5px, 5px); }
+  50% { transform: translate(5px, -5px); }
+  75% { transform: translate(-5px, -5px); }
+  100% { transform: translate(0); }
+}
